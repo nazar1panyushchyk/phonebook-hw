@@ -1,7 +1,9 @@
 import React from "react";
+import "./css/contacts.css";
 
 
 export default class ContactList extends React.Component {
+
   render() {
     const { contacts } = this.props;
     return (

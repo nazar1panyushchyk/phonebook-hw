@@ -16,6 +16,19 @@ class App extends React.Component {
     filter: "",
   };
 
+  componentDidMount() {
+    const savedContacts = JSON.parse(localStorage.getItem("contacts"));
+    if (savedContacts) {
+      this.setState({ contacts: savedContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
+  }
+
   addContact = (contact) => {
     this.setState((prevState) => ({
       contacts: [...prevState.contacts, contact],
@@ -23,8 +36,8 @@ class App extends React.Component {
   };
 
   handleFilter = (value) => {
-    this.setState({ filter: value })
-  }
+    this.setState({ filter: value });
+  };
 
   getFilteredContacts = () => {
     const { contacts, filter } = this.state;
@@ -34,22 +47,25 @@ class App extends React.Component {
         contact.name.toLowerCase().includes(normalizedFilter) ||
         contact.number.toLowerCase().includes(normalizedFilter)
     );
-  }
+  };
 
   onDelete = (id) => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter((contact) => contact.id !== id)
-    }))
-  }
+    this.setState((prevState) => ({
+      contacts: prevState.contacts.filter((contact) => contact.id !== id),
+    }));
+  };
 
   render() {
     return (
       <>
         <h1>Phonebook</h1>
-        <ContactForm onAddContact={this.addContact} />
+        <ContactForm onAddContact={this.addContact} contacts={this.state.contacts} />
         <h2>Contacts</h2>
         <Filter onFilterChange={this.handleFilter} value={this.state.filter} />
-        <ContactList contacts={this.getFilteredContacts()} onDelete={this.onDelete} />
+        <ContactList
+          contacts={this.getFilteredContacts()}
+          onDelete={this.onDelete}
+        />
       </>
     );
   }

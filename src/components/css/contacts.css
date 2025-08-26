@@ -6,9 +6,8 @@
     padding: 50px;
 }
 
-.add-form button {
-    height: 60px;
-    font-size: 20px;
+.add-inputs button {
+    background-color: green;
 }
 
 input {
@@ -28,4 +27,8 @@ label {
     gap: 15px;
 }
 
+.filter-contacts button {
+    background-color: #ce4c4c;
+    margin-left: 10px;
+}
 
